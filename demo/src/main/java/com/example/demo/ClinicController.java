@@ -38,15 +38,5 @@ public class ClinicController {
         return clinicRepository.save(newClinic);
     }
 
-    //Get all clinics
-    @GetMapping ("/autoload")
-    public String autoload(){
-        Clinic clinic1 = new Clinic("Clinic Number One", "One Street Name 1234");
-        Clinic clinic2 = new Clinic("Clinic Number Two", "Other Street Name 5678");
-        clinicRepository.save(clinic1);
-        clinicRepository.save(clinic2);
-        return "Clinics auto load";
-    }
-
 
 }

@@ -29,31 +29,24 @@ public class ClientController {
     }
 
     //Find client by clinicid
-    //@GetMapping ("/clientsbyclinicid/{id}")
-    //public Client getClientsByClinicid(@PathVariable Long id){
-    //    Optional<Client> possibbleClient = clientRepository.findByClinicid(id);
-    //    return possibbleClient.orElse(null);
-    //}
+    @GetMapping ("/clientsbyclinicid/{id}")
+    public List<Client> getClientsByClinicId(@PathVariable Long id){
+        Optional<Clinic> possibbleClinic = clinicRepository.findById(id);
+        if (possibbleClinic.isPresent()){
+            return possibbleClinic.get().getClient();
+        }
+        else{
+            return null;
+        }
+    }
 
-    //Save client
-    //(@GetMapping ("/addclient")
-    //public Client addClient(@RequestParam Long clinicid, @RequestParam String name){
-    //    Client newClinic = new Client(clinicid,name);
-    //    return clientRepository.save(newClinic);
-    //}
     @RequestMapping(value = "/clients", method = RequestMethod.POST)
     public Client getClientsPost(@RequestBody ClientDTO clientDTO) {
-        //String clinicId = json.get("clinic_id");
-        //String name = json.get("name");
-        //long id = Long.parseLong(clinicId);
         Optional<Clinic> possibbleClinic = clinicRepository.findById(clientDTO.getClinicId());
         if (possibbleClinic.isPresent()){
             Clinic clinic = possibbleClinic.get();
-            clinic.getClient().add(new Client(clinic, clientDTO.getName()));
-            //clinic.save();
-            return clinicRepository.save(clinic);
-            //Client newClient = new Client(clinic, clientDTO.getName());
-            //return clientRepository.save(newClient);
+            Client newClient = new Client(clinic, clientDTO.getName());
+            return clientRepository.save(newClient);
         }
         else{
             return null;

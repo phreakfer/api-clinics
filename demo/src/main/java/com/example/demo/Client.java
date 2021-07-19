@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -9,6 +11,7 @@ public class Client {
     private Long id;
     @ManyToOne()
     @JoinColumn(name = "clinic_id")
+    @JsonIgnore
     private Clinic clinic;
     private String name;
 
