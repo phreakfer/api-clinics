@@ -5,5 +5,4 @@ import java.util.Optional;
 
 public interface PetRepository extends CrudRepository<Pet,Long> {
     List<Pet> findAll();
-    Optional<Pet> findByClientid(Long id);
 }

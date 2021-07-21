@@ -12,6 +12,10 @@ public class DemoApplication implements CommandLineRunner {
 
 	@Autowired
 	ClinicRepository clinicRepository;
+	@Autowired
+	ClientRepository clientRepository;
+	@Autowired
+	PetRepository petRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -19,11 +23,18 @@ public class DemoApplication implements CommandLineRunner {
 		Clinic clinic2 = new Clinic("Clinic Number Two", "Other Street Name 5678");
 		clinicRepository.save(clinic1);
 		clinicRepository.save(clinic2);
+
+		Client client1 = new Client(clinic1,"Client 1");
+		Client client2 = new Client(clinic1,"Client 2");
+		clientRepository.save(client1);
+		clientRepository.save(client2);
+
+		Pet pet1 = new Pet(client2, "Loro");
+		Pet pet2 = new Pet(client2, "Perro");
+		Pet pet3 = new Pet(client2, "Gato");
+		petRepository.save(pet1);
+		petRepository.save(pet2);
+		petRepository.save(pet3);
 	}
 
-
-	//@Autowired
-	//ClinicRepository clinicRepository;
-	//Clinic newclinic = new Clinic("Nombre", "Direccion");
-	//clinicRepository.save(newclinic);
 }

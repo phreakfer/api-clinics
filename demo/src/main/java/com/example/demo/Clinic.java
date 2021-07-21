@@ -39,7 +39,6 @@ public class Clinic {
     public void setAddress(String address) {
         this.address = address;
     }
-
     public void setClient(List<Client> client) {
         this.client = client;
     }

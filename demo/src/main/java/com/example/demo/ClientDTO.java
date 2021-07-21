@@ -19,7 +19,7 @@ public class ClientDTO {
     }
 
     public ClientDTO(){}
-    public ClientDTO(String name, String address, Long clinicId){
+    public ClientDTO(String name, Long clinicId){
         this.name = name;
         this.clinicId = clinicId;
     }

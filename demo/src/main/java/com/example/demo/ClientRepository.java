@@ -5,5 +5,5 @@ import java.util.Optional;
 
 public interface ClientRepository extends CrudRepository<Client, Long> {
     List<Client> findAll();
-    //Optional<Client> findByClinicid(Long id);
+    Optional<Client> findById(Long id);
 }

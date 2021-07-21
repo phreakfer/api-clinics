@@ -11,6 +11,9 @@ public class PetController {
     @Autowired
     PetRepository petRepository;
 
+    @Autowired
+    ClientRepository clientRepository;
+
     //Get all pets
     @GetMapping("/pets")
     public List<Pet> getPets(){
@@ -19,24 +22,35 @@ public class PetController {
 
     //Find pet by id
     @GetMapping ("/pets/{id}")
-    @ResponseBody
     public Pet getPetById(@PathVariable Long id){
         Optional<Pet> possibblePet = petRepository.findById(id);
         return possibblePet.orElse(null);
     }
 
-    //Find client by clientid
-    @GetMapping ("/petsbyclientid/{id}")
-    @ResponseBody
-    public Pet getPetsByClientid(@PathVariable Long id){
-        Optional<Pet> possibblePet = petRepository.findByClientid(id);
-        return possibblePet.orElse(null);
+    //Find pet by clientid
+    @GetMapping ("/petsbyclient/{id}")
+    public List<Pet> getPetsByClientId(@PathVariable Long id){
+        Optional<Client> possibbleClient = clientRepository.findById(id);
+        if (possibbleClient.isPresent()){
+            return possibbleClient.get().getPet();
+        }
+        else{
+            return null;
+        }
     }
 
     //Save pet
-    @GetMapping ("/addpet")
-    public Pet addPet(@RequestParam Long clientid, @RequestParam String name){
-        Pet newClinic = new Pet(clientid, name);
-        return petRepository.save(newClinic);
+    @RequestMapping(value = "/pets", method = RequestMethod.POST)
+    public Pet getPetsPost(@RequestBody PetDTO petDTO) {
+        Optional<Client> possibbleClient = clientRepository.findById(petDTO.getClientId());
+        if (possibbleClient.isPresent()){
+            Client client = possibbleClient.get();
+            Pet newPet = new Pet(client, petDTO.getName());
+            return petRepository.save(newPet);
+        }
+        else{
+            return null;
+        }
     }
+
 }

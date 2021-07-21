@@ -3,6 +3,7 @@ package com.example.demo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Client {
@@ -14,6 +15,8 @@ public class Client {
     @JsonIgnore
     private Clinic clinic;
     private String name;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pet> pet;
 
     //getters
     public Long getId() {
@@ -25,6 +28,7 @@ public class Client {
     public String getName() {
         return name;
     }
+    public List<Pet> getPet() {return pet;}
 
     //setters
     public void setId(Long id) {
@@ -36,6 +40,7 @@ public class Client {
     public void setName(String name) {
         this.name = name;
     }
+    public void setPet(List<Pet> pet) {this.pet = pet;}
 
     //constructors
     public Client() {
@@ -44,9 +49,4 @@ public class Client {
         this.clinic = clinic;
         this.name = name;
     }
-    //public Client(Long clinic_id, String name){
-    //    this.clinic_id = clinic_id;
-    //    this.name = name;
-    //}
-
-}
+  }

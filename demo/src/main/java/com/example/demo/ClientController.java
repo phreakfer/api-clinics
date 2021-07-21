@@ -29,7 +29,7 @@ public class ClientController {
     }
 
     //Find client by clinicid
-    @GetMapping ("/clientsbyclinicid/{id}")
+    @GetMapping ("/clientsbyclinic/{id}")
     public List<Client> getClientsByClinicId(@PathVariable Long id){
         Optional<Clinic> possibbleClinic = clinicRepository.findById(id);
         if (possibbleClinic.isPresent()){
