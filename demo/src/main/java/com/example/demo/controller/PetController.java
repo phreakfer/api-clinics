@@ -1,6 +1,14 @@
-package com.example.demo;
+package com.example.demo.controller;
 
+import com.example.demo.dto.PetDTO;
+import com.example.demo.entity.Client;
+import com.example.demo.entity.Pet;
+import com.example.demo.repository.ClientRepository;
+import com.example.demo.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,7 +36,7 @@ public class PetController {
     }
 
     //Find pet by clientid
-    @GetMapping ("/petsbyclient/{id}")
+    @GetMapping ("/clients/{id}/pets")
     public List<Pet> getPetsByClientId(@PathVariable Long id){
         Optional<Client> possibbleClient = clientRepository.findById(id);
         if (possibbleClient.isPresent()){
@@ -39,7 +47,7 @@ public class PetController {
         }
     }
 
-    //Save pet
+    //Save
     @RequestMapping(value = "/pets", method = RequestMethod.POST)
     public Pet getPetsPost(@RequestBody PetDTO petDTO) {
         Optional<Client> possibbleClient = clientRepository.findById(petDTO.getClientId());
@@ -51,6 +59,15 @@ public class PetController {
         else{
             return null;
         }
+    }
+
+    //Search by name and page
+    static final int pageSize = 1;
+    @GetMapping ("/pets/search")
+    public List<Pet> searchPetsByName(@RequestParam String name,@RequestParam int page){
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Pet> userPage = petRepository.findByNameContaining(name, pageable);
+        return userPage.toList();
     }
 
 }

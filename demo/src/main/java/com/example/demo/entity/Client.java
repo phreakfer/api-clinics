@@ -1,7 +1,5 @@
-package com.example.demo;
-
+package com.example.demo.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -43,8 +41,7 @@ public class Client {
     public void setPet(List<Pet> pet) {this.pet = pet;}
 
     //constructors
-    public Client() {
-    }
+    public Client() {}
     public Client(Clinic clinic, String name) {
         this.clinic = clinic;
         this.name = name;
